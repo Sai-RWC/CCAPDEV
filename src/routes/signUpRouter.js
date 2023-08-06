@@ -15,7 +15,7 @@ signUpRouter.get('/signup', (req, res) => {
 signUpRouter.post('/createAccount', async (req, res) => {
   try {
     console.log("/createAccount request received");
-    // const hashedPass = bcrypt.hash(req.body.password, 10 =>);
+    const hashedPass = await bcrypt.hash(req.body.password, 10);
     console.log(`hashedPass: ${hashedPass}`);
     const newUser = new User({
       username: req.body.username,
@@ -25,11 +25,15 @@ signUpRouter.post('/createAccount', async (req, res) => {
       alert('Account Successfully created');
       console.log(`${newUser.username} successfully created`);
       res.status(200).json({success: true});
-      res.redirect('/login');
+      return res.redirect(302, '/login');
     }).catch(err => {
         if (err.name === "MongoServerError" && err.code === 11000) {
           // 300 => username is already taken
-          res.status(300).json({sucess: false, msg: "Username is already taken"});
+          res.status(300).json({
+            sucess: false, 
+            error1: "Username is already taken",
+            error2: ""
+          });
           console.log("User is already taken");
         }
         // console.log(err.name)

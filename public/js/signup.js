@@ -17,7 +17,7 @@ function checkInput(name, pass) {
   // checkdb if name is existing in the database; return 1
   // checkdb if password is field with the same entry is incorrect; return 2
   // if no error; return 0
-  
+
   return 0;
 }
 
@@ -50,14 +50,25 @@ submitBtn.addEventListener("click", e => {
   fetch("/createAccount", {
     method: "POST",
     body: jsonCreds,
+    redirect: 'follow',
     headers: {
       'Content-Type': 'application/json'
     }
   }).then((res) => {
       console.log(`Server responded: ${res}`);
       if (res.status === 200) {
+        console.log(`status(302): ${res.url}`)
         // alert("Account successfully created");
-        location.replace('/login');
+        location.assign(res.url);
+        // location.replace('/login');
+      }
+      else {
+        res.json().then(data => {
+          if (!data.success) {
+            error1.innerHTML = data.error1
+            error2.innerHTML = data.error2
+          }
+        });
       }
     }).catch(err => {
       var err1 = document.getElementById("error1");
@@ -77,7 +88,7 @@ submitBtn.addEventListener("click", e => {
   //   case 2:
   //   document.querySelector("#error"+2).style.visibility = "visible";
   // }
-}) 
+}); 
 
 
 inputForm.addEventListener("onkey", event => {
@@ -98,11 +109,20 @@ inputForm.addEventListener("onkey", event => {
       }).then((res) => {
           console.log(`Server responded: ${res}`);
           if (res.status === 200) {
+            res.url
             // alert("Account successfully created");
-
+            location.assign(res.url);
+            // location.replace('/login');
+          }
+          else {
+            res.json().then(data => {
+              if (!data.success) {
+                error1.innerHTML = data.error1
+                error2.innerHTML = data.error2
+              }
+            });
           }
         }).catch(err => {
-          var err1 = document.getElementById("error1");
           console.error(err);
         });
     }

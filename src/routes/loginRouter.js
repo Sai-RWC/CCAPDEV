@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { User } from "../models/user.js";
-import 'bcrypt';
+import bcrypt from 'bcrypt';
 // import { Post } from "../models/post.js";
 
 const loginRouter = Router();  
@@ -21,8 +21,9 @@ loginRouter.post('/loginUser', async (req, res) => {
     const userAccount = await User.findOne({username: req.body.username}).lean().exec();
     if (userAccount){
       console.log("Username is found")
-      const hashedPass = await bcrypt.hash(req.body.password, 10)
-      if (userAccount.password === hashedPass) {
+      // const hashedPass = await bcrypt.hash(req.body.password, 10);
+      // console.log(`hashed: ${hashedPass}`);
+      if (await bcrypt.compare(req.body.password, userAccount.password)) {
         console.log("User successfully logged in")
         process.env.CURRENTUSER = userAccount.username;
         console.log(`username: ${userAccount.username}`)
