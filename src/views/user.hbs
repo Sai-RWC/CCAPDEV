@@ -1,0 +1,101 @@
+<link href="/static/css/user.css" rel="stylesheet">
+<script src="/static/js/user.js"></script>
+    <header>
+      <span class="header-element">
+        <a href="#">Home</a>
+      </span>
+      <form class="topsearchbar">
+        <input type="text" name="search" value="">
+      </form>
+      <nav>
+        <ul>
+          <li><a href="./login.html">Sign in</a></li>
+          <li><a href="./signup.html">Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="profile-partition">
+      <div class="spacer"></div>
+      <div>
+        <div class="profile-user flex">
+          <img src="https://api.dicebear.com/6.x/bottts/svg?seed=Felix" class="profile-user-icon flex">
+          <div class="profile-user-name flex-col">
+            <!-- get current user name from JS var perhaps?? -->
+        {{user.username}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <main>
+      <div class="container">
+        <div class="post-header">
+          <img class="user-icon" src="https://api.dicebear.com/6.x/bottts/svg?seed=Felix" alt="avatar">
+          <div>
+            <h3 class="user">AzureDreamer23</h3>
+            <p class="timestamp">4 hrs ago</p>
+          </div>
+        </div>
+        <div class="flex flex-col post">
+          <div class="post-padding-bot">
+          </div>
+          <div class="interact flex flex-row"> 
+            <span class="button-shell text-12 flex">
+              <button class="aspect-square button-vote flex" aria-pressed="false">
+                <!-- <img src="assets/hero-icon-small-up.svg" height="15px" width="15px" alt=""> -->
+                <span class="upvote flex"></span>
+              </button>
+              <!-- test -->
+              <div class="vote-count count-num"> 0 </div>
+              <button class="aspect-square button-vote flex items-center" aria-pressed="false">
+                <!-- <img src="assets/hero-icon-small-down.svg" height="15px" width="15px" alt=""> -->
+                <span class="downvote flex"></span>
+              </button>
+            </span>
+            <span class="button-shell text-12 flex">
+              <button class="comment-button flex aspect-square">
+                <span class="comment flex"></span>
+                <div class="comment-count count-num">0</div>
+              </button>
+            </span>
+          </div>
+        </div>
+
+
+    {{#if posts}}
+    {{#each posts}}
+          <div>
+            <h3 class="user">{{this.user.username}}</h3>
+            <p class="timestamp">4 hrs ago</p>
+          </div>
+        </div>
+        <div class="flex flex-col post">
+          <div class="post-padding-bot">
+      {{this.message}}
+          </div>
+          <div class="interact flex flex-row"> 
+            <span class="button-shell text-12 flex">
+              <button class="aspect-square button-vote flex" aria-pressed="false">
+                <!-- <img src="assets/hero-icon-small-up.svg" height="15px" width="15px" alt=""> -->
+                <span class="upvote flex"></span>
+              </button>
+              <!-- test -->
+        <div class="vote-count count-num"> {{this.reaction}} </div>
+              <button class="aspect-square button-vote flex items-center" aria-pressed="false">
+                <!-- <img src="assets/hero-icon-small-down.svg" height="15px" width="15px" alt=""> -->
+                <span class="downvote flex"></span>
+              </button>
+            </span>
+            <span class="button-shell text-12 flex">
+              <button class="comment-button flex aspect-square">
+                <span class="comment flex"></span>
+                <div class="comment-count count-num">0</div>
+              </button>
+            </span>
+          </div>
+        </div>
+      {{/each}}
+      {{else}}
+      <p> No posts to show... </p>
+      {{/if}}
+        

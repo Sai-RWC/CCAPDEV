@@ -1,0 +1,114 @@
+<script src="../../public/js/index.js" defer> </script>
+    <header>
+      <span class="header-element">
+        <a href="/">Home</a>
+      </span>
+      <form class="topsearchbar">
+        <input type="text" name="search" value="">
+      </form>
+      <nav>
+      {{!-- {{#if logged_in}} --}}
+
+      {{!-- {{#else}} --}}
+        <ul>
+          <li><a href="/login">Sign in</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+        </ul>
+      {{!-- {{/#if}} --}}
+
+      </nav>
+    </header>
+    <main>
+{{#if posts}}
+    {{#each posts}}
+      <div class="container">
+        <div class="post-header">
+          <img class="user-icon" src="https://api.dicebear.com/6.x/bottts/svg?seed=Felix" alt="avatar">
+          <div>
+            <h3 class="user">AzureDreamer23</h3>
+            <p class="timestamp">4 hrs ago</p>
+          </div>
+        </div>
+        <div class="flex flex-col post">
+          <div class="post-padding-bot">
+            Greetings, forum friends!<br>
+
+              Allow me to introduce myself as AzureDreamer23. I've embarked on this digital journey to connect with like-minded individuals, and I couldn't be more excited to be a part of this vibrant community.<br>
+
+              Curiosity is my driving force, and I'm passionate about exploring a wide range of topics. From technology and gaming to art and philosophy, I love immersing myself in thought-provoking conversations that expand my horizons.<br>
+
+              When I'm not online, you'll likely find me lost in the pages of a captivating book or indulging in creative pursuits. Nature also holds a special place in my heart, as I find solace and inspiration in its beauty.<br>
+
+              I'm eager to contribute, learn, and forge meaningful connections with each of you. Let's embark on this adventure together and make this forum an incredible hub of knowledge and camaraderie.<br>
+
+              Here's to exciting discussions and endless possibilities!<br>
+          </div>
+          <div class="interact flex flex-row"> 
+            <span class="button-shell text-12 flex">
+              <button class="aspect-square button-vote flex" aria-pressed="false">
+              <!-- <img src="assets/hero-icon-small-up.svg" height="15px" width="15px" alt=""> -->
+                <span class="upvote flex"></span>
+              </button>
+              <!-- test -->
+              <div class="vote-count count-num"> No.of votes </div>
+              <button class="aspect-square button-vote flex items-center" aria-pressed="false">
+                <!-- <img src="assets/hero-icon-small-down.svg" height="15px" width="15px" alt=""> -->
+                <span class="downvote flex"></span>
+              </button>
+            </span>
+            <span class="button-shell text-12 flex">
+              <button class="comment-button flex aspect-square">
+                <span class="comment flex"></span>
+                <div class="comment-count count-num">No. of comments</div>
+              </button>
+            </span>
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="post-header">
+          <img class="user-icon" src="https://api.dicebear.com/6.x/lorelei/svg?seed=Aneka" alt="avatar">
+          <div>
+            <h3 class="user">SerenityWhisper</h3>
+            <p class="timestamp">4 hrs ago</p>
+          </div>
+        </div>
+        <div class="post">
+          <div class="post-padding-bot">
+            Hey there, guys<br>
+              I'm SerenityWhisper, joining this amazing community to share and learn. Let's embark on this exciting journey together and make this forum a place of inspiration and connection!
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="post-header">
+          <img class="user-icon" src="https://api.dicebear.com/6.x/bottts/svg?eyes=shade01" alt="avatar">
+          <div>
+            <h3 class="user">MysticQuestor42</h3>
+            <p class="timestamp">5 hrs ago</p>
+          </div>
+        </div>
+        <div class="post">
+
+          Hey everyone!<br>
+
+            I'm MysticQuestor42, excited to be part of this forum. I'm a seeker of knowledge, fascinated by ancient mysteries and the wonders of the cosmos. Let's embark on this journey together and uncover the extraordinary!
+        </div>
+      </div>
+      <div class="container">
+        <div class="post-header">
+          <img class="user-icon" src="https://api.dicebear.com/6.x/lorelei/svg?earrings=variant01" alt="avatar">
+          <div>
+            <h3 class="user">WhisperingWanderer</h3>
+            <p class="timestamp">6 hrs ago</p>
+          </div>
+        </div>
+        <div class="post">
+          Hey there, fellow forum-goers!<br>
+
+            I'm WhisperingWanderer, a seeker of serenity and explorer of all things beautiful. Join me on this journey as we share stories, find inspiration, and embrace the wonders of the world together.
+        </div>
+      </div>
+    </main>

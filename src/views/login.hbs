@@ -1,0 +1,20 @@
+    <link href="/static/css/login.css" rel="stylesheet">
+    <script defer src="/static/js/login.js"></script>
+
+    <div class="main">
+      <p class="sign" align="center">Sign in</p>
+      <form id="inputForm" class="form1">
+        <input id="uName" class="un" type="text" align="center" placeholder="Username" minlength="3" data-index="0" required>
+        <div id="error1" class="error">{{error1}}</div>
+        <div>
+          <input id="uPass" class="pass" type="password" align="center" placeholder="Password" data-index="1" required>
+        </div>
+        <div id="error2" class ="error" style="padding-bottom: 30px;">{{error2}}</div>
+      </form>
+        <div>
+          <a href="#" class="submit" align="center">Sign in</a>
+        </div>
+        <div class="try">
+          <span class="signup" style=""> Don't have an account? <a href="signup" style="">Sign Up</a></span>
+        </div>
+    </div>
