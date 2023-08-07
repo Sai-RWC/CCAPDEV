@@ -57,6 +57,7 @@ postForm.addEventListener('keydown', event => {
     }).then((res) => {
         if (res.status == 200) {
           console.log('Server responded');
+          postForm.value = '';
           location.reload();
         }
       }).catch(error => {
@@ -102,6 +103,7 @@ submitBtn.addEventListener('click', e => {
     }).then((res) => {
         if (res.status == 200) {
           console.log('Server responded');
+          postForm.value = '';
           location.reload();
         }
       }).catch(error => {
