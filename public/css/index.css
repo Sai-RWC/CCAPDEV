@@ -329,3 +329,8 @@ span.comment {
   justify-content: center;
   align-items: center;
 }
+
+h3 a {
+  text-decoration: none;
+  color: black
+}

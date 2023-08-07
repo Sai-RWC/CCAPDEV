@@ -32,12 +32,6 @@ function search(ele) {
   }
 }
 
-// showButton.addEventListener('click', e => {
-//   e.preventDefault();
-//   console.log('Show button is being clicked');
-//   textBoxContainer.classList.remove('hidden');
-// });
-//
 postForm.addEventListener('keydown', event => {
   if (event.keyCode === 13) {
     console.log('enter is pressed');
@@ -77,6 +71,12 @@ showButton.addEventListener('click', e => {
 
 function upVote(btn) {
   alert('button clicked');
+  if (btn.value == 'OFF') {
+
+  }
+  if (btn.value == 'ON') {
+
+  }
   console.log(btn.parentNode.parentNode.parentNode);
 }
 

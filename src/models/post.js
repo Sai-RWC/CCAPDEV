@@ -1,4 +1,4 @@
-import { Schema, SchemaTypes, model } from "mongoose";
+import mongoose, { Schema, SchemaTypes, model } from "mongoose";
 
 const postSchema = new Schema({
   user: {
@@ -24,7 +24,17 @@ const postSchema = new Schema({
   },
   reaction: {
     type: SchemaTypes.Decimal128,
-    default: 0
+    default: 0,
+    reactors: [{
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'user',
+      vote: {
+        type: SchemaTypes.Decimal128,
+        // 1=> upvote, 0 => no react, -1 => downvote
+        enum: [1, 0, -1],
+        default: 0
+    }
+    }]
   },
   numComments: {
     type: SchemaTypes.Decimal128,

@@ -13,35 +13,37 @@ import passport from "passport";
 
 
 const router = Router();
-router.get('/', checkAuthenticated, async (req, res) => {
-  let user = null;
-
-  // Check if the user is authenticated using the checkAuthenticated middleware
-  if (req.isAuthenticated()) {
-    console.log('User is Authenticated');
-    // Convert the 'req.user' object to a plain JavaScript object
-    try {
-      user = req.user.toObject();
-    } catch (error) {
-      console.error(error);
-    }
-  } else {
-    console.log('User is not yet auth');
-  }
-
-  // Fetch posts from the database, populating the 'user' field
-  const posts = await Post.find({}).populate('user').lean().exec();
-
-  // Log the 'req.user' object and render the 'index' page
-  console.log(`currentUser: ${req.user}`);
-  res.render('index', {
-    title: "Home Page",
-    user: user,
-    posts: posts,
-    isLoggedIn: req.isAuthenticated(),
-    currentUser: user
-  });
-});
+// router.get('/', checkAuthenticated, async (req, res, next) => {
+//   let user = null;
+//
+//   // Check if the user is authenticated using the checkAuthenticated middleware
+//   if (req.isAuthenticated()) {
+//     console.log('User is Authenticated');
+//     // Convert the 'req.user' object to a plain JavaScript object
+//     try {
+//       user = req.user.toObject();
+//     } catch (error) {
+//
+//       console.error(error);
+//     }
+//   } else {
+//     console.log('User is not yet auth');
+//   }
+//
+//   // Fetch posts from the database, populating the 'user' field
+//   const posts = await Post.find({}).populate('user').lean().exec();
+//
+//
+//   // Log the 'req.user' object and render the 'index' page
+//   console.log(`currentUser: ${req.user}`);
+//   res.render('index', {
+//     title: "Home Page",
+//     user: user,
+//     posts: posts,
+//     isLoggedIn: req.isAuthenticated(),
+//     currentUser: user
+//   });
+// });
 // router.get('/', checkAuthenticated, async (req, res) => {
 //   // const users = await User.find({}).lean().exec();
 //   // const currentUser = await User.findOne({username: process.env.CURRENTUSER}).lean().exec();
@@ -76,18 +78,38 @@ router.get('/', checkAuthenticated, async (req, res) => {
 // });
 
 router.get('/', async (req, res) => {
-  const user = await User.find({}).lean().exec();
-  const posts = await Post.find({}).populate('user').lean().exec();
+  let user = null;
+
+  // Check if the user is authenticated using the checkAuthenticated middleware
+  if (req.isAuthenticated()) {
+    console.log('User is Authenticated');
+    var posts = await Post.find({}).populate('user').lean().exec();
+
+    // Convert the 'req.user' object to a plain JavaScript object
+    console.log(`user: ${req.user}`);
+      user = req.user.toObject();
+  } 
+  else {
+    console.log('User is not yet auth');
+    var posts = await Post.find({}).limit(15).populate('user').lean().exec();
+  }
+
+  // const posts = await Post.find({}).populate('user').lean().exec();
+  // const user = await User.find({}).lean().exec();
+  // console.log('Unauth got called');
 
   res.render('index', {
     title: "Home Page",
-    user: user,
+    // user: user,
     posts: posts,
-    isLoggedIn: req.isAuthenticated()
+    isLoggedIn: req.isAuthenticated(),
+    currentUser: user
   });
-})
+});
 
-router.post('/postText', checkNotAuthenticated, async (req, res) => {
+
+router.post('/postText', async (req, res) => {
+  console.log('/postText is called');
   const user = req.user.toObject();
   const newPost = new Post({
     user: user._id,
@@ -137,18 +159,21 @@ router.use((req, res) => {
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return next()
+    // return next()
+    console.log('User is authenticated');
+  }
+  else {
+    res.redirect('/login')
   }
 
-  // res.redirect('/login')
-  next()
+  // return next();
 }
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect('/')
   }
-  next()
+  next();
 }
 
 export default router;

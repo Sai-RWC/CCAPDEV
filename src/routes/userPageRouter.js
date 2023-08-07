@@ -6,14 +6,17 @@ import { Comment } from "../models/comment.js";
 const userPageRouter = Router();
 
 userPageRouter.get('/u/:userName', async (req, res) => {
+  let currentUser = null;
   const user = await User.findOne({username: req.params.userName}).lean().exec();
+  if(req.isAuthenticated()) {
+    currentUser = req.user.toObject();
+  }
   if (user){
     console.log("User:");
     console.log(user);
     const posts = await Post.find({user: user._id}).populate('user').lean().exec();
     console.log(posts);
     const comments = await Comment.find({}).populate('user').populate('post').lean().exec();
-    const currentUser = req.user.toObject();
     console.log(currentUser);
     res.render('user', {
       title: "Profile",
@@ -29,10 +32,23 @@ userPageRouter.get('/u/:userName', async (req, res) => {
       err_message: "User does not exist"
     });
   }
-  // console.log("Comments:");
-  // console.log(comments);
-  // console.log("all posts:");
-  // console.log(await Post.find({}).lean().exec());
+
+  function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      // return next()
+      console.log('User is authenticated');
+    }
+
+    res.redirect('/login')
+    // return next();
+  }
+
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next();
+  }
 
 });
 

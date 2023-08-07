@@ -47,7 +47,8 @@
         <div class="post-header">
           <img class="user-icon" src="https://api.dicebear.com/6.x/bottts/svg?seed=Felix" alt="avatar">
           <div>
-            <h3 class="user">{{this.user.username}}</h3>
+            <h3 class="user"><a href="/u/{{this.user.username}}">{{this.user.username}}<a></h3>
+            {{!-- <h3 class="user">{{this.user.username}}</h3> --}}
             <p class="timestamp">{{formatDate this.datecreated}}</p>
           </div>
         </div>
@@ -56,17 +57,17 @@
           {{this.message}}
           </div>
           <div class="interact flex flex-row" name="{{this._id}}"> 
-          {{#if isLoggedIn}}
+          {{!-- {{#if isLoggedIn}} --}}
             <span class="button-shell text-12 flex">
               <button class="aspect-square button-vote flex" aria-pressed="false">
               <!-- <img src="assets/hero-icon-small-up.svg" height="15px" width="15px" alt=""> -->
-                <span class="upvote flex" onclick="upVote(this)" id="upvote"></span>
+                <span class="upvote flex" onclick="upVote(this)" value={{this.reactors}} id="upvote"></span>
               </button>
               <!-- test -->
               <div class="vote-count count-num"> {{this.reaction}} </div>
               <button class="aspect-square button-vote flex items-center" aria-pressed="false">
                 <!-- <img src="assets/hero-icon-small-down.svg" height="15px" width="15px" alt=""> -->
-                <span class="downvote flex" onclick="downVote(this)" id="downvote"></span>
+                <span class="downvote flex" onclick="downVote(this)" value="OFF" id="downvote"></span>
               </button>
             </span>
             <span class="button-shell text-12 flex">
@@ -75,16 +76,8 @@
                 <div class="comment-count count-num">0</div>
               </button>
             </span>
-              {{else}}
-            <span class="button-shell text-12 flex">
-              <span class="upvote flex" id="upvote"></span>
-              <div class="vote-count count-num"> {{this.reaction}} </div>
-              <span class="downvote flex" id="downvote"></span>
-            </span>
-            <span class="button-shell text-12 flex">
-                <span class="comment flex"></span>
-            </span>
-            {{/if}}
+              {{!-- {{else}} --}}
+            {{!-- {{/if}} --}}
           </div>
         </div>
       </div>
