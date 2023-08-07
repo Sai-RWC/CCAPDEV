@@ -4,6 +4,9 @@ import { fileURLToPath } from 'url';
 
 import express from 'express';
 import exphbs from 'express-handlebars';
+import session from 'express-session'
+import passport from 'passport';
+
 
 import { connect } from './src/models/db.js';
 import 'bcrypt'
@@ -12,7 +15,6 @@ import { Post } from './src/models/post.js';
 import { Comment } from './src/models/comment.js';
 
 import router from './src/routes/index.js';
-import session from 'express-session'
 
 async function main() {
   const __dirname = dirname(fileURLToPath(import.meta.url));
