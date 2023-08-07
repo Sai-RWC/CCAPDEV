@@ -6,11 +6,11 @@ import bcrypt from 'bcrypt';
 
 function initialize(passport)  {
   const authenticateUser = async (username, password, done) => {
-    console.log(`usernamereq: ${username}`)
-    console.log(`passwordreq: ${password}`)
+    // console.log(`usernamereq: ${username}`)
+    // console.log(`passwordreq: ${password}`)
     // const user = await getUserByUserName(username)
     const user = await User.findOne({username: username});
-    console.log(`${user.username}`);
+    // console.log(`${user.username}`);
     if (user == null) {
       return done(null, false, {status: 400, message: "User is not found"});
     }

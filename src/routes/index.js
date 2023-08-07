@@ -14,7 +14,7 @@ import passport from "passport";
 
 const router =  Router();
 
-router.get('/', checkAuthenticated, async (req, res) => {
+router.get('/', checkAuthenticated, async (req, res, next) => {
   // const users = await User.find({}).lean().exec();
   // const currentUser = await User.findOne({username: process.env.CURRENTUSER}).lean().exec();
   if (req.isAuthenticated()) {
@@ -26,9 +26,15 @@ router.get('/', checkAuthenticated, async (req, res) => {
   // console.log(`User: ${req.user.name}`);
   // console.log(`currentUser: ${currentUser}`);
   // console.log(`CURRENTUSERID: ${process.env.CURRENTUSERID}`);
-  const posts = await Post.find({}).populate('users').lean().exec();
+  const posts = await Post.find({}).populate('user').lean().exec();
   // console.log("Process Val: " + process.env.ISLOGGEDIN);
-  const user = req.user.toObject();
+  const user = null;
+  try {
+    const user = req.user.toObject();
+    
+  } catch (error) {
+    console.error(error);
+  }
   console.log(`currentUser: ${req.user}`);
   res.render('index', {
     title: "Home Page",
@@ -41,13 +47,29 @@ router.get('/', checkAuthenticated, async (req, res) => {
 
 router.get('/', async (req, res) => {
   const user = await User.find({}).lean().exec();
-  const posts = await Post.find({}).populate('user').exec();
+  const posts = await Post.find({}).populate('user').lean().exec();
 
   res.render('index', {
     title: "Home Page",
     user: user,
-    posts: posts
+    posts: posts,
+    isLoggedIn: req.isAuthenticated()
   });
+})
+
+router.post('/postText', checkAuthenticated, async (req, res) => {
+  const user = req.user.toObject();
+  const newPost = new Post({
+    user: user._id,
+    message: req.body.message
+  });
+  newPost.save().then(results => {
+    console.log('Post successfully saved');
+    res.status(200).json({success: true});
+    // reload the page
+  }).catch(err => {
+      console.log(err);
+    })
 })
 
 // router.get('/signout', async (req, res) => {
@@ -88,7 +110,8 @@ function checkAuthenticated(req, res, next) {
     return next()
   }
 
-  res.redirect('/login')
+  // res.redirect('/login')
+  next()
 }
 
 function checkNotAuthenticated(req, res, next) {

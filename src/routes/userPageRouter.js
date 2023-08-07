@@ -14,6 +14,7 @@ userPageRouter.get('/u/:userName', async (req, res) => {
     console.log(posts);
     const comments = await Comment.find({}).populate('user').populate('post').lean().exec();
     const currentUser = req.user.toObject();
+    console.log(currentUser);
     res.render('user', {
       title: "Profile",
       user: user,

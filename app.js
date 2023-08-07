@@ -89,36 +89,3 @@ async function main() {
 }
 
 main();
-//
-// app.get('/', (req,res) => {
-//   res.redirect('/home');
-// })
-//
-// app.get('/home', (req,res) => {
-//   res.render('index', {
-//     title: 'homepage',
-//     name: 'test'
-//   });
-// });
-//
-// app.get('/login', (req,res) => {
-//   res.render('login', {
-//     title: 'Sign in'
-//   });
-// });
-//
-// app.get('/signup', (req,res) => {
-//   res.render('signup', {
-//     title: 'Sign up'
-//   });
-// });
-//
-// app.get('/user', (req,res) => {
-//   res.render('user', {
-//     title: 'Profile'
-//   })
-// })
-//
-// app.listen(port, () => {
-//   console.log("Server now listening on port " + port);
-// });

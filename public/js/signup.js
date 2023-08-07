@@ -90,8 +90,11 @@ submitBtn.addEventListener("click", e => {
   // }
 }); 
 
+console.log(`inputform: ${inputForm}`);
 
-inputForm.addEventListener("onkey", event => {
+
+inputForm.addEventListener('keydown', event => {
+  console.log(inputForm);
   if (event.keyCode === 13) {
     event.preventDefault();
 
@@ -99,6 +102,15 @@ inputForm.addEventListener("onkey", event => {
     var index = parseFloat(target.getAttribute('data-index'));
     var inputElements = document.querySelectorAll('#inputForm input');
     if (index == 1) {
+      var uName = document.getElementById("userName").value;
+      var uPass = document.getElementById("userPass").value;
+      var uInput = {};
+      uInput['username'] = uName;
+      uInput['password'] = uPass;
+
+      var jsonCreds = JSON.stringify(uInput)
+
+      console.log(jsonCreds)
 
       fetch("/createAccount", {
         method: "POST",
@@ -109,8 +121,8 @@ inputForm.addEventListener("onkey", event => {
       }).then((res) => {
           console.log(`Server responded: ${res}`);
           if (res.status === 200) {
-            res.url
-            // alert("Account successfully created");
+            // res.url
+            alert("Account successfully created");
             location.assign(res.url);
             // location.replace('/login');
           }

@@ -286,3 +286,46 @@ span.comment {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.button-container {
+  margin-bottom: 20px;
+  display: flex;
+  /* margin: auto; */
+  justify-content: center;
+  align-items: center;
+}
+.toggle-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--color-shade0);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.text-box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-box {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--color-shade1);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

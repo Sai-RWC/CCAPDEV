@@ -22,9 +22,9 @@ signUpRouter.post('/createAccount', async (req, res) => {
       password: hashedPass
     });
     newUser.save().then(results => {
-      alert('Account Successfully created');
+      console.log('Account Successfully created');
       console.log(`${newUser.username} successfully created`);
-      res.status(200).json({success: true});
+      // res.status(200).json({success: true});
       return res.redirect(302, '/login');
     }).catch(err => {
         if (err.name === "MongoServerError" && err.code === 11000) {

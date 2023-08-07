@@ -18,8 +18,9 @@ const postSchema = new Schema({
   },
   datecreated: {
     type: SchemaTypes.Date,
-    required: true,
-    immutable: true
+    // required: true,
+    immutable: true,
+    default: () => Date.now()
   },
   reaction: {
     type: SchemaTypes.Decimal128,
