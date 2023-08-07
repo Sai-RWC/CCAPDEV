@@ -11,6 +11,7 @@ const postForm = document.querySelector('#textBox');
 
 const upvote = document.querySelector('#upvote');
 const downvote = document.querySelector('#downvote');
+const submitBtn = document.querySelector('#submitButton');
 
 function search(ele) {
   if (event.key === 'Enter') {
@@ -82,6 +83,31 @@ function downVote(btn) {
   // alert
   console.log(btn.parentNode.parentNode.parentNode);
 }
+
+submitBtn.addEventListener('click', e => {
+  e.preventDefault();
+    const message = postForm.value;
+    const uInput = {}
+    uInput['message'] = message;
+    // uInput['datecreated'] = new Date();
+
+    var jsonCreds = JSON.stringify(uInput);
+    fetch('/postText', {
+      method: 'POST',
+      body: jsonCreds,
+      redirect: 'follow',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+        if (res.status == 200) {
+          console.log('Server responded');
+          location.reload();
+        }
+      }).catch(error => {
+        console.error(error);
+      });
+})
 
 // signout.addEventListener('click', e => {
 //   e.preventDefault();
