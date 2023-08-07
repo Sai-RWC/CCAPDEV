@@ -12,29 +12,27 @@ import passport from "passport";
 // import initialize from "../config/passport-config.js";
 
 
-const router =  Router();
+const router = Router();
+router.get('/', checkAuthenticated, async (req, res) => {
+  let user = null;
 
-router.get('/', checkAuthenticated, async (req, res, next) => {
-  // const users = await User.find({}).lean().exec();
-  // const currentUser = await User.findOne({username: process.env.CURRENTUSER}).lean().exec();
+  // Check if the user is authenticated using the checkAuthenticated middleware
   if (req.isAuthenticated()) {
     console.log('User is Authenticated');
-  }
-  else {
+    // Convert the 'req.user' object to a plain JavaScript object
+    try {
+      user = req.user.toObject();
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
     console.log('User is not yet auth');
   }
-  // console.log(`User: ${req.user.name}`);
-  // console.log(`currentUser: ${currentUser}`);
-  // console.log(`CURRENTUSERID: ${process.env.CURRENTUSERID}`);
+
+  // Fetch posts from the database, populating the 'user' field
   const posts = await Post.find({}).populate('user').lean().exec();
-  // console.log("Process Val: " + process.env.ISLOGGEDIN);
-  const user = null;
-  try {
-    const user = req.user.toObject();
-    
-  } catch (error) {
-    console.error(error);
-  }
+
+  // Log the 'req.user' object and render the 'index' page
   console.log(`currentUser: ${req.user}`);
   res.render('index', {
     title: "Home Page",
@@ -44,6 +42,38 @@ router.get('/', checkAuthenticated, async (req, res, next) => {
     currentUser: user
   });
 });
+// router.get('/', checkAuthenticated, async (req, res) => {
+//   // const users = await User.find({}).lean().exec();
+//   // const currentUser = await User.findOne({username: process.env.CURRENTUSER}).lean().exec();
+//   if (req.isAuthenticated()) {
+//     console.log('User is Authenticated');
+//   }
+//   else {
+//     console.log('User is not yet auth');
+//   }
+//   // console.log(`User: ${req.user.name}`);
+//   // console.log(`currentUser: ${currentUser}`);
+//   // console.log(`CURRENTUSERID: ${process.env.CURRENTUSERID}`);
+//   const posts = await Post.find({}).populate('user').lean().exec();
+//   // console.log("Process Val: " + process.env.ISLOGGEDIN);
+//   // const user = null;
+//   const user = req.user.toObject();
+//   try {
+//     const user = req.user.toObject();
+//     
+//   } catch (error) {
+//     console.error(error);
+//     const user = null;
+//   }
+//   console.log(`currentUser: ${req.user}`);
+//   res.render('index', {
+//     title: "Home Page",
+//     user: user,
+//     posts: posts,
+//     isLoggedIn: req.isAuthenticated(),
+//     currentUser: user
+//   });
+// });
 
 router.get('/', async (req, res) => {
   const user = await User.find({}).lean().exec();
@@ -57,7 +87,7 @@ router.get('/', async (req, res) => {
   });
 })
 
-router.post('/postText', checkAuthenticated, async (req, res) => {
+router.post('/postText', checkNotAuthenticated, async (req, res) => {
   const user = req.user.toObject();
   const newPost = new Post({
     user: user._id,
