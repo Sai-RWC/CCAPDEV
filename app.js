@@ -20,6 +20,7 @@ import { Comment } from './src/models/comment.js';
 import router from './src/routes/index.js';
 
 import { formatDate } from './src/helpers/handlebars-helpers.js';
+import { loginError } from './src/helpers/handlebars-helpers.js';
 
 import initialize from './src/config/passport-config.js';
 
@@ -27,17 +28,14 @@ async function main() {
   const __dirname = dirname(fileURLToPath(import.meta.url));
   const app = express();
 
-  app.use(session ({
-    secret: "some secret here",
-    cookie: {maxAge: 30000},
-    saveUninitialized: true
-  }));
-
   app.use('/static', express.static(__dirname + '/public'));
 
   app.engine('hbs', exphbs.engine({
     extname: 'hbs',
-    helpers: formatDate
+    helpers: {
+      formatDate,
+      loginError
+    }
   }));
 
   app.set('view engine', 'hbs');
@@ -46,7 +44,11 @@ async function main() {
 
   app.set('view cache', false);
 
-  initialize(passport, user => User.findOne({username: user}));
+  initialize(
+    passport 
+    // user => User.findOne({username: user}),
+    // id => User.findOne({_id: id})
+  );
 
   // app.get('/', (req, res) => {
   //   res.render('index', {
@@ -62,16 +64,18 @@ async function main() {
   //   res.render('signup');
   // })
 
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.json());
-
-  app.use(flash());
   app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(flash());
+
+  app.use(express.json());
+
 
   
   app.use(router);

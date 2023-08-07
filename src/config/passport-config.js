@@ -1,17 +1,18 @@
+import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-// import { User } from "../models/user";
+import { User } from "../models/user.js";
 import bcrypt from 'bcrypt';
 
 
-function initialize(passport, getUserByUserName)  {
+function initialize(passport)  {
   const authenticateUser = async (username, password, done) => {
-    console.log(`username: ${username}`)
-    console.log(`password: ${password}`)
-    const user = await getUserByUserName(username)
+    console.log(`usernamereq: ${username}`)
+    console.log(`passwordreq: ${password}`)
+    // const user = await getUserByUserName(username)
+    const user = await User.findOne({username: username});
     console.log(`${user.username}`);
     if (user == null) {
-      console.log('User is found')
-      return done(null, false, {message: "User is not found"});
+      return done(null, false, {status: 400, message: "User is not found"});
     }
 
     try {
@@ -20,7 +21,7 @@ function initialize(passport, getUserByUserName)  {
         return done(null, user)
       }
       else {
-        return done(null, false, {message: "Incorrect password"})
+        return done(null, false, {status: 401, message: "Incorrect password"})
       }
 
     } catch (error) {
@@ -30,8 +31,16 @@ function initialize(passport, getUserByUserName)  {
 
   passport.use(new LocalStrategy({usernameField: 'username'},
   authenticateUser))
-  passport.serializeUser((user, done) => { })
-  passport.deserializeUser((user, done) => { })
+  passport.serializeUser(User.serializeUser());
+  // passport.serializeUser((user, done) => {
+  //   console.log(`user: ${user} userid: ${user._id}`);
+  //   return done(null, user.username);
+  // });
+    // done(null, user._id));
+  // passport.deserializeUser((user, done) => {
+  //   return done(null, User.findOne({_id: user._id}));
+  // });
+  passport.deserializeUser(User.deserializeUser());
 }
 
 // module.exports = initialize;

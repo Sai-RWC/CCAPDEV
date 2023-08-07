@@ -13,17 +13,21 @@ userPageRouter.get('/u/:userName', async (req, res) => {
     const posts = await Post.find({user: user._id}).populate('user').lean().exec();
     console.log(posts);
     const comments = await Comment.find({}).populate('user').populate('post').lean().exec();
-
+    const currentUser = req.user.toObject();
     res.render('user', {
       title: "Profile",
       user: user,
       posts: posts,
       comments: comments,
+      currentUser: currentUser,
+      isLoggedIn: req.isAuthenticated()
     });
   }
-  res.render('error', {
-    err_message: "User does not exist"
-  })
+  else{ 
+    res.render('error', {
+      err_message: "User does not exist"
+    });
+  }
   // console.log("Comments:");
   // console.log(comments);
   // console.log("all posts:");

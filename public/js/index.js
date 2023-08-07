@@ -1,5 +1,6 @@
 // https://stackoverflow.com/questions/20998541/get-the-value-of-input-text-when-enter-key-pressed
 const searchBar = document.querySelector('#searchQ');
+const signout = document.querySelector('#signout');
 
 function search(ele) {
   if (event.key === 'Enter') {
@@ -19,3 +20,10 @@ function search(ele) {
     }
   }
 }
+
+// signout.addEventListener('click', e => {
+//   e.preventDefault();
+//   fetch('/signout').then((res) => {
+//     console.log(res);
+//   })
+// })

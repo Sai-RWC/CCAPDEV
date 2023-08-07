@@ -50,7 +50,7 @@ submitBtn.addEventListener("click", function (e) {
       'Content-Type': 'application/json'
     }
   }).then((res) => {
-      if (res.status == 302) {
+      if (res.status == 200) {
         console.log(`Server responded: ${res}`);
         location.assign(res.url)
       }

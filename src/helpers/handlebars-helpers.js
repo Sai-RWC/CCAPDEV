@@ -54,6 +54,16 @@ export const formatDate = (date) => {
 
 }
 
+export const loginError = (err) => {
+  if (err.startsWith('User')) {
+    return 'User does not exist';
+  }
+  if (err.startsWith('Incorrect')) {
+    return 'Incorrect Password';
+  }
+  
+}
+
 // export const loginFormatError = (error) => {
 //   if (error.startsWith('User') {
 //     return 

@@ -6,7 +6,7 @@ const signUpRouter = Router();
 var accountQuery;
 const title = "Sign Up";
 
-signUpRouter.get('/signup', (req, res) => {
+signUpRouter.get('/signup', checkNotAuthenticated, (req, res) => {
   res.render('signup', {
     title: 'Sign Up',
   });
@@ -74,5 +74,20 @@ signUpRouter.post('/createAccount', async (req, res) => {
 //     }
 //   })
 // });
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+
+  res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  }
+  next()
+}
 
 export default signUpRouter;
